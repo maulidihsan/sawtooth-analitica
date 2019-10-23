@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+message Location {
+  float long = 1;
+  float lat = 2;
+}
+
+message Document {
+  string    legalitas = 1;
+  string    jenis_aset = 2;
+  string    alamat_aset = 3;
+  float     luas_tanah = 4;
+  float     luas_bangunan = 5;
+  string    bentuk_tanah = 6;
+  float     lebar_jalan = 7;
+  float     frontage = 8;
+  string    letak_tanah = 9;
+  float     elevasi = 10;
+  bool      daerah_banjir = 11;
+  uint32    RCNterdepresiasi = 12;
+  Location    koordinat = 13;
+  string    gambar_aset = 14;
+  string    AJB = 15;
+}
+
+message DocumentContainer {
+  repeated Document entries = 1;
+}

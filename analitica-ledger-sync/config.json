@@ -1,0 +1,22 @@
+{
+  "VALIDATOR_URL": "tcp://localhost:4004",
+  "DB_TYPE" : "RETHINK",
+  "DB_HOST" : "localhost",
+  "DB_PORT" : 28015,
+  "DB_NAME" : "analitica",
+  "RETRY_WAIT" : 5000,
+  "TP_NAMESPACE": "a5cd8b",
+  "DATABASES": [
+    {
+      "name": "documents",
+      "index": "legalitas",
+      "proto_file": "documents.proto",
+      "proto_message_name": "Document",
+      "address_prefix": "00"
+    },
+    {
+      "name": "blocks",
+      "index": "blockId"
+    }
+  ]
+}
