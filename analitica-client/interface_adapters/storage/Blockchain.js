@@ -1,12 +1,15 @@
 const {createHash} = require('crypto')
 const {CryptoFactory, createContext } = require('sawtooth-sdk/signing')
 const protobuf = require('sawtooth-sdk/protobuf')
+const pb = require('protobufjs');
+const path = require('path');
 const cbor = require('cbor')
 const fetch = require('node-fetch');
 const {TextEncoder, TextDecoder} = require('text-encoding/lib/encoding')
 
 const FAMILY_NAME = 'analitica'
 const FAMILY_VERSION = '1.0'
+const PREFIX = '00'
 
 const hash = (v) => createHash('sha512').update(v).digest('hex');
 
@@ -26,7 +29,22 @@ class AnaliticaClient {
     }
 
     get(legalitas) {
-        this._wrap_and_send("get", legalitas);
+        return this._get_from_rest_api(this._make_address(legalitas));
+    }
+
+    _loadProtos(filename, protoNames) {
+        const protoPath = path.resolve('./protos', filename)
+        return pb.load(protoPath)
+            .then(root => {
+                let protos = {};
+                return Promise.all(protoNames.map(name => {
+                    protos[name] = root.lookupType(name)
+                })).then(() => protos)
+            })
+    }
+
+    _make_address(value) {
+        return this.address + PREFIX + hash(value).toLowerCase().substring(0, 62);
     }
 
     _wrap_and_send(action, values){
@@ -76,39 +94,50 @@ class AnaliticaClient {
         return this._send_to_rest_api(batchListBytes);
     }
 
+    _get_from_rest_api(address) {
+        var geturl = 'http://'+process.env.REST+':'+process.env.REST_PORT+'/state/'+address;
+        console.log("Getting from: " + geturl);
+        return fetch(geturl, {
+            method: 'GET',
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            var data = responseJson.data;
+            var buffer = new Buffer.from(data, 'base64');
+            return buffer;
+        })
+        .then(buffer => {
+            return this._loadProtos('documents.proto', ['Document', 'Location'])
+            .then(protos => {
+                let decoded = protos['Document'].decode(buffer);
+                return protos['Document'].toObject(decoded, {
+                    enums: String,
+                    longs: String,
+                    bytes: String,
+                    defaults: true
+                })
+            })
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
     _send_to_rest_api(batchListBytes){
-        if (batchListBytes == null) {
-            var geturl = 'http://localhost:8008/state/'+this.address
-            console.log("Getting from: " + geturl);
-            return fetch(geturl, {
-                method: 'GET',
-            })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                var data = responseJson.data;
-                var amount = new Buffer(data, 'base64').toString();
-                return amount;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        }
-        else{
-            return fetch('http://localhost:8008/batches', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/octet-stream'
-                },
-                body: batchListBytes
-            })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                return responseJson;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        }
+        return fetch('http://'+process.env.REST+':'+process.env.REST_PORT+'/batches', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/octet-stream'
+            },
+            body: batchListBytes
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            return responseJson;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
     }
 }
 module.exports = AnaliticaClient;

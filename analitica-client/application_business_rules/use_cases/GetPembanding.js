@@ -1,3 +1,3 @@
-module.exports = (long, lat, dokumenRepo) => {
-    return dokumenRepo.getPembanding(long, lat);
+module.exports = (koordinat, dokumenRepo) => {
+    return dokumenRepo.getPembanding(koordinat);
 }

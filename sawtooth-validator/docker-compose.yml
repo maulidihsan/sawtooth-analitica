@@ -1,7 +1,45 @@
-version: "2.1"
+version: "3.6"
 
 services:
-
+  db:
+    image: rethinkdb:latest
+    container_name: rethink
+    expose:
+      - 28015
+    ports:
+      - "8080:8080"
+  transaction-processor:
+    image: maulidihsan/analitica-tp:latest
+    container_name: analitica-tp
+    deploy:
+      replicas: 3
+    depends_on:
+      - validator
+    entrypoint: "node index.js tcp://validator:4004"
+  analitica-rest:
+    image: maulidihsan/analitica-client:latest
+    container_name: analitica-client
+    depends_on:
+      - db
+    environment:
+      - PORT=8089
+      - DB_HOST=db
+      - DB_PORT=28015
+      - DB_USER=admin
+      - DB_PWD=
+      - DB_NAME=analitic
+      - REST=rest-api
+      - REST_PORT=8008
+    expose:
+      - 8089
+    ports:
+      - "8089:8089"
+  ledger-sync:
+    image: maulidihsan/analitica-ledger-sync:latest
+    container_name: ledger-sync
+    depends_on:
+      - validator
+      - db
   settings-tp:
     image: hyperledger/sawtooth-settings-tp:1.0
     container_name: sawtooth-settings-tp-default
@@ -30,6 +68,8 @@ services:
   rest-api:
     image: hyperledger/sawtooth-rest-api:1.0
     container_name: sawtooth-rest-api-default
+    expose:
+      - 8008
     ports:
       - "8008:8008"
     depends_on:

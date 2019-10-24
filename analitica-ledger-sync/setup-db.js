@@ -32,6 +32,7 @@ module.exports = () => {
         console.log(`Added ${db.index} to the database ${db.name}`)
         dbIndexPromises.push(r.db(config.DB_NAME).table(db.name).indexCreate(db.index).run(connection))
       }
+      dbIndexPromises.push(r.db('analitica').table('documents').indexCreate('koordinat', {geo: true}).run(connection))
       return Promise.all(dbIndexPromises)
     })
   })

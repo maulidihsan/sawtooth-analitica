@@ -1,7 +1,7 @@
 {
-  "VALIDATOR_URL": "tcp://localhost:4004",
+  "VALIDATOR_URL": "tcp://validator:4004",
   "DB_TYPE" : "RETHINK",
-  "DB_HOST" : "localhost",
+  "DB_HOST" : "db",
   "DB_PORT" : 28015,
   "DB_NAME" : "analitica",
   "RETRY_WAIT" : 5000,

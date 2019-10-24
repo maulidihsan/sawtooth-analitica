@@ -39,19 +39,19 @@ module.exports = {
             if (!errors.isEmpty()) {
                 return res.status(400).json(errors.array())
             }
-            const doc = await GetDocument(req.param.legalitas, blockchain);
+            const doc = await GetDocument(req.params.legalitas, blockchain);
             return res.status(200).json(doc);
         }
     ],
     getPembanding: [
-        param('legalitas').exists(),
+        param('id').exists(),
         async (req, res, next) => {
             let errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json(errors.array())
             }
-            const doc = await GetDocument(req.param.legalitas, blockchain);
-            const pembanding = await GetPembanding(doc.location.long, doc.location.lat, dokumenRepo);
+            const doc = await GetDocument(req.params.id, dokumenRepo);
+            const pembanding = await GetPembanding(doc.koordinat, dokumenRepo);
             return res.status(200).json(pembanding);
         }
     ],

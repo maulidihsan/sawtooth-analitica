@@ -30,7 +30,7 @@ const createHTTPServer = async (db) => {
     });
     app.get('/get/:legalitas', DocumentController.getDokumen);
     app.get('/get', DocumentController.listDokumen);
-    app.get('/pembanding/:legalitas', DocumentController.getPembanding);
+    app.get('/pembanding/:id', DocumentController.getPembanding);
     return app;
 }
 

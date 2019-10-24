@@ -19,10 +19,10 @@ class RethinkDB {
         }
     }
 
-    async getPembanding(long, lat) {
+    async getPembanding(koordinat) {
         try {
-            const coordinate = this.model.point(long, lat);
-            let pembanding = await this.model.table('documents').getNearest(coordinate, {index: 'koordinat', maxResults: 3, maxDist: 500}).run(this.con);
+            const coordinate = this.model.point(koordinat.long, koordinat.lat);
+            let pembanding = await this.model.table('documents').getNearest(coordinate, {index: 'koordinat', maxResults: 3, maxDist: 5000, unit: 'km'}).run(this.con);
             pembanding = await pembanding.toArray();
             return pembanding.map(doc => new Document(doc.id, doc.legalitas, doc.jenisAset, doc.alamatAset, doc.luasTanah,
                 doc.luasBangunan, doc.bentukTanah, doc.lebarJalan, doc.frontage, doc.letakTanah,

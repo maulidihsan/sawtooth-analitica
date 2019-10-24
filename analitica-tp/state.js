@@ -41,11 +41,14 @@ class AnaliticaState {
     }
 
     getValue(value) {
-        var address = makeAddress(value);
-        return  this.context.getState([address], this.timeout).then((stateEntries) => {
-            Object.assign(this.stateEntries, stateEntries);
-            console.log(this.stateEntries[address].toString())
-            return  this.stateEntries;
+        return this.loadProtos('documents.proto', ['Document', 'Location'])
+        .then(protos => {
+            var address = makeAddress(value);
+            console.log(address);
+            return  this.context.getState([address], this.timeout).then((stateEntries) => {
+                Object.assign(this.stateEntries, stateEntries);
+                console.log(protos['Document'].decode(this.stateEntries[address]));
+            })
         })
     }
 }
