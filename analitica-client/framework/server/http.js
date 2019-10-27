@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const bodyParser = require('body-parser')
 const ipfsApi = require('ipfs-api')
 const multer = require('multer')
@@ -8,6 +9,7 @@ const upload = multer({storage: storage})
 
 const createHTTPServer = async (db) => {
     const app = express();
+    app.use(cors());
     const DocumentController = require('../../interface_adapters/controllers/DocumentController');
     DocumentController.init(db);
     const ipfs = ipfsApi({

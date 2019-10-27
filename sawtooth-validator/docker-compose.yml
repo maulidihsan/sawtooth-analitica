@@ -27,7 +27,7 @@ services:
       - DB_PORT=28015
       - DB_USER=admin
       - DB_PWD=
-      - DB_NAME=analitic
+      - DB_NAME=analitica
       - REST=rest-api
       - REST_PORT=8008
     expose:
