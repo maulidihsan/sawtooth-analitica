@@ -21,6 +21,7 @@ message Document {
   Location    koordinat = 13;
   string    gambar_aset = 14;
   string    AJB = 15;
+  uint64    created_at = 16;
 }
 
 message DocumentContainer {

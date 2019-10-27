@@ -1,6 +1,6 @@
 class Document {
 
-    constructor(id =null, legalitas, jenisAset, alamatAset, luasTanah, luasBangunan, bentukTanah, lebarJalan, frontage, letakTanah, elevasi, daerahBanjir, RCNterdepresiasi, koordinat, gambarAset = null, AJB = null) {
+    constructor(id = null, legalitas, jenisAset, alamatAset, luasTanah, luasBangunan, bentukTanah, lebarJalan, frontage, letakTanah, elevasi, daerahBanjir, RCNterdepresiasi, koordinat, gambarAset = null, AJB = null, createdAt = null) {
         this.id = id;
         this.legalitas = legalitas;
         this.jenisAset = jenisAset;
@@ -17,6 +17,7 @@ class Document {
         this.koordinat = koordinat;
         this.gambarAset = gambarAset;
         this.AJB = AJB;
+        this.createdAt = createdAt;
     }
 }
 

@@ -25,8 +25,9 @@ class AnaliticaState {
         .then(protos => {
             var address = makeAddress(nomorSertifikat);
             var stateEntriesSend = {}
+            data.createdAt = Math.round((new Date()).getTime() / 1000);
             data.koordinat = protos['Location'].create(data.koordinat);
-            var payload = protos['Document'].create(data) // masih hardcoded
+            var payload = protos['Document'].create(data)
             console.log(payload);
             let encoded = protos['Document'].encode(payload).finish()
             console.log(encoded);
