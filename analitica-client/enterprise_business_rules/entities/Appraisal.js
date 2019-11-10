@@ -1,14 +1,9 @@
-class Document {
+class Appraisal {
 
     constructor(
         id = null,
         legalitas,
         jenisLegalitas,
-        nama,
-        telepon,
-        tahun,
-        tahunRenovasi,
-        hubungan,
         jenisAset,
         alamatAset,
         luasTanah,
@@ -22,18 +17,14 @@ class Document {
         RCNterdepresiasi,
         nilaiTanah,
         koordinat,
-        gambarAset = null,
+        adjustment,
+        pembobotan,
         createdAt = null
     ) {
 
         this.id = id;
         this.legalitas = legalitas;
         this.jenisLegalitas = jenisLegalitas;
-        this.nama = nama;
-        this.telepon = telepon;
-        this.hubungan = hubungan;
-        this.tahun = tahun;
-        this.tahunRenovasi = tahunRenovasi;
         this.jenisAset = jenisAset;
         this.alamatAset = alamatAset;
         this.luasTanah = luasTanah;
@@ -47,7 +38,8 @@ class Document {
         this.RCNterdepresiasi = RCNterdepresiasi;
         this.nilaiTanah = nilaiTanah;
         this.koordinat = koordinat;
-        this.gambarAset = gambarAset;
+        this.adjustment = adjustment;
+        this.pembobotan = pembobotan;
         this.createdAt = createdAt;
     }
 }

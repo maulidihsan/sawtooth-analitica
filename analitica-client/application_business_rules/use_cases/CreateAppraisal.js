@@ -1,15 +1,10 @@
-const Document = require('../../enterprise_business_rules/entities/Document');
+const Appraisal = require('../../enterprise_business_rules/entities/Appraisal');
 
-module.exports = (dataDokumen, dokumenRepo) => {
-    const dokumen = new Document(
+module.exports = (dataDokumen, appraisalRepo) => {
+    const appraisal = new Appraisal(
         null,
         dataDokumen.legalitas,
         dataDokumen.jenisLegalitas,
-        dataDokumen.nama,
-        dataDokumen.telepon,
-        dataDokumen.tahun,
-        dataDokumen.tahunRenovasi,
-        dataDokumen.hubungan,
         dataDokumen.jenisAset,
         dataDokumen.alamatAset,
         dataDokumen.luasTanah,
@@ -23,7 +18,8 @@ module.exports = (dataDokumen, dokumenRepo) => {
         dataDokumen.RCNterdepresiasi,
         dataDokumen.nilaiTanah,
         dataDokumen.koordinat,
-        dataDokumen.gambarAset,
+        dataDokumen.adjustment,
+        dataDokumen.pembobotan,
     );
-    return dokumenRepo.store(dokumen);
+    return appraisalRepo.store(appraisal);
 };

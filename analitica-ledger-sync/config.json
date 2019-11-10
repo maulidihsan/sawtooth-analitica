@@ -15,6 +15,13 @@
       "address_prefix": "00"
     },
     {
+      "name": "appraisals",
+      "index": "legalitas",
+      "proto_file": "appraisal.proto",
+      "proto_message_name": "Appraisal",
+      "address_prefix": "11"
+    },
+    {
       "name": "blocks",
       "index": "blockId"
     }

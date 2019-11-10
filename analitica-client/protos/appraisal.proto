@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+message Location {
+  float long = 1;
+  float lat = 2;
+}
+
+message Adjustment {
+    float time = 1;
+    float land_document = 2;
+    float land_area = 3;
+    float location = 4;
+    float soil_form = 5;
+    float frontage = 6;
+    float lebar_jalan = 7;
+    float bentuk_tanah = 8;
+}
+
+message Appraisal {
+  string    legalitas = 1;
+  string    jenis_legalitas = 2;
+  string    jenis_aset = 3;
+  string    alamat_aset = 4;
+  float     luas_tanah = 5;
+  float     luas_bangunan = 6;
+  string    bentuk_tanah = 7;
+  float     lebar_jalan = 8;
+  float     frontage = 9;
+  string    letak_tanah = 10;
+  float     elevasi = 11;
+  bool      daerah_banjir = 12;
+  uint32    RCNterdepresiasi = 13;
+  uint32    nilai_tanah = 14;
+  Location  koordinat = 15;
+  float     pembobotan = 16;
+  Adjustment adjustment = 17;
+  uint64    created_at = 18;
+}
+
+message AppraisalContainer {
+  repeated Appraisal entries = 1;
+}

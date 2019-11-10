@@ -14,9 +14,9 @@ class AnaliticaHandler extends TransactionHandler {
         let state = new AnaliticaState(context);
 
         if (payload.action === 'get') {
-            return state.getValue(payload.data.legalitas)
+            return state.getValue(payload.type, payload.data.legalitas)
         } else  if (payload.action === 'set') {
-            return state.setValue(payload.data.legalitas, payload.data)
+            return state.setValue(payload.type, payload.data.legalitas, payload.data)
         } else {
             throw  new InvalidTransaction(
             `Action must be set, get, or take not ${payload.action}`

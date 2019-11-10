@@ -7,20 +7,27 @@ message Location {
 
 message Document {
   string    legalitas = 1;
-  string    jenis_aset = 2;
-  string    alamat_aset = 3;
-  float     luas_tanah = 4;
-  float     luas_bangunan = 5;
-  string    bentuk_tanah = 6;
-  float     lebar_jalan = 7;
-  float     frontage = 8;
-  string    letak_tanah = 9;
-  float     elevasi = 10;
-  bool      daerah_banjir = 11;
-  uint32    RCNterdepresiasi = 12;
-  Location    koordinat = 13;
-  string    gambar_aset = 14;
-  string    AJB = 15;
+  string    jenis_legalitas = 2;
+  string    nama = 3;
+  string    telepon = 4;
+  string    hubungan = 5;
+  uint32    tahun = 6;
+  uint32    tahun_renovasi = 7;
+  string    jenis_aset = 8;
+  string    alamat_aset = 9;
+  float     luas_tanah = 10;
+  float     luas_bangunan = 11;
+  string    bentuk_tanah = 12;
+  float     lebar_jalan = 13;
+  float     frontage = 14;
+  string    letak_tanah = 15;
+  float     elevasi = 16;
+  bool      daerah_banjir = 17;
+  uint32    RCNterdepresiasi = 18;
+  uint32    nilai_tanah = 19;
+  Location  koordinat = 20;
+  string    gambar_aset = 21;
+  uint64    created_at = 22;
 }
 
 message DocumentContainer {

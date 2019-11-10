@@ -1,4 +1,4 @@
-const { check, param, validationResult } = require('express-validator');
+const { check, param, query, validationResult } = require('express-validator');
 
 const CreateDocument = require('../../application_business_rules/use_cases/CreateDocument');
 const ListDocument = require('../../application_business_rules/use_cases/ListDocument');
@@ -14,7 +14,7 @@ module.exports = {
         dokumenRepo = new DocumentRepository(db);
     },
     createDokumen: [
-        check('legalitas').isLength({min: 14, max: 14}),
+        check('legalitas').exists().not().isEmpty(),
         check('luasTanah').isNumeric(),
         check('luasBangunan').isNumeric(),
         check('lebarJalan').isNumeric(),
@@ -27,7 +27,6 @@ module.exports = {
             if (!errors.isEmpty()) {
                 return res.status(400).json(errors.array())
             }
-            console.log(blockchain);
             const doc = await CreateDocument(req.body, blockchain);
             return res.status(200).json(doc);
         }
@@ -44,14 +43,18 @@ module.exports = {
         }
     ],
     getPembanding: [
-        param('id').exists(),
+        query('lang').exists(),
+        query('long').exists(),
         async (req, res, next) => {
             let errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json(errors.array())
             }
-            const doc = await GetDocument(req.params.id, dokumenRepo);
-            const pembanding = await GetPembanding(doc.koordinat, dokumenRepo);
+            const koordinat = {
+                long: req.query.long,
+                lat: req.query.lat
+            }
+            const pembanding = await GetPembanding(koordinat, dokumenRepo);
             return res.status(200).json(pembanding);
         }
     ],

@@ -11,7 +11,9 @@ const createHTTPServer = async (db) => {
     const app = express();
     app.use(cors());
     const DocumentController = require('../../interface_adapters/controllers/DocumentController');
+    const AppraisalController = require('../../interface_adapters/controllers/AppraisalController');
     DocumentController.init(db);
+    AppraisalController.init(db);
     const ipfs = ipfsApi({
         host: 'ipfs.infura.io',
         port: 5001,
@@ -21,6 +23,8 @@ const createHTTPServer = async (db) => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.post('/add', DocumentController.createDokumen);
+    app.get('/appraisal/list', AppraisalController.listAppraisal);
+    app.post('/apprisal', AppraisalController.createAppraisal);
     app.post('/upload', upload.single('image'), (req, res) => {
         ipfs.files.add(req.file.buffer, function (err, file) {
             if (err) {
@@ -32,7 +36,7 @@ const createHTTPServer = async (db) => {
     });
     app.get('/get/:legalitas', DocumentController.getDokumen);
     app.get('/get', DocumentController.listDokumen);
-    app.get('/pembanding/:id', DocumentController.getPembanding);
+    app.get('/pembanding', DocumentController.getPembanding);
     return app;
 }
 
