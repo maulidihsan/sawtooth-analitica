@@ -44,4 +44,4 @@ class Appraisal {
     }
 }
 
-module.exports = Document;
+module.exports = Appraisal;

@@ -33,6 +33,7 @@ module.exports = () => {
         dbIndexPromises.push(r.db(config.DB_NAME).table(db.name).indexCreate(db.index).run(connection))
       }
       dbIndexPromises.push(r.db('analitica').table('documents').indexCreate('koordinat', {geo: true}).run(connection))
+      dbIndexPromises.push(r.db('analitica').table('appraisals').indexCreate('koordinat', {geo: true}).run(connection))
       return Promise.all(dbIndexPromises)
     })
   })
