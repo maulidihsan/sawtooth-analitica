@@ -11,8 +11,8 @@ class AppraisalRepository {
         return this.repository.get(documentId);
     }
 
-    getAll() {
-        return this.repository.getAll();
+    getAppraisal() {
+        return this.repository.getAppraisal();
     }
 }
 

@@ -24,7 +24,7 @@ const createHTTPServer = async (db) => {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.post('/add', DocumentController.createDokumen);
     app.get('/appraisal/list', AppraisalController.listAppraisal);
-    app.post('/apprisal', AppraisalController.createAppraisal);
+    app.post('/appraisal', AppraisalController.createAppraisal);
     app.post('/upload', upload.single('image'), (req, res) => {
         ipfs.files.add(req.file.buffer, function (err, file) {
             if (err) {

@@ -1,3 +1,3 @@
 module.exports = (appraisalRepo) => {
-    return appraisalRepo.getAll();
+    return appraisalRepo.getAppraisal();
 }

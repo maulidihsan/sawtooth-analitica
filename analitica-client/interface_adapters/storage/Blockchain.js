@@ -25,7 +25,9 @@ class AnaliticaClient {
     }
 
     store(payload) {
-        return this._wrap_and_send("set", JSON.stringify(payload));
+        let type = payload.type;
+        delete payload['type'];
+        return this._wrap_and_send("set", type, JSON.stringify(payload));
     }
 
     get(legalitas) {
@@ -47,9 +49,10 @@ class AnaliticaClient {
         return this.address + PREFIX + hash(value).toLowerCase().substring(0, 62);
     }
 
-    _wrap_and_send(action, values){
+    _wrap_and_send(action, type, values){
         let payload = {};
         payload.action = action;
+        payload.type = type;
         payload.data = JSON.parse(values);
         console.log('blockchain payload:', payload)
         const payloadBytes = cbor.encode(payload);
