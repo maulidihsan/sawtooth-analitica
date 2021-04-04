@@ -10,7 +10,7 @@ services:
       - "8080:8080"
   transaction-processor:
     image: maulidihsan/analitica-tp:latest
-    container_name: analitica-tp
+    #container_name: analitica-tp
     deploy:
       replicas: 3
     depends_on:
@@ -55,7 +55,7 @@ services:
       - "4004:4004"
     # start the validator with an empty genesis batch
     entrypoint: "bash -c \"\
-        sawadm keygen && \
+        sawadm keygen --force && \
         sawtooth keygen my_key && \
         sawset genesis -k /root/.sawtooth/keys/my_key.priv && \
         sawadm genesis config-genesis.batch && \
